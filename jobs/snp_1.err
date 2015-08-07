@@ -1,0 +1,4 @@
+str_sims.py:94: RuntimeWarning: invalid value encountered in divide
+  fits=fits/(sum(fits))
+str_sims.py:122: RuntimeWarning: invalid value encountered in less
+  survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
