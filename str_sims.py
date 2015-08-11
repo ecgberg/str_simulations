@@ -18,8 +18,13 @@
 import numpy as np
 import copy
 import math
-import time
 import argparse
+
+# THIS IS FOR TESTING - COMMENT IT OUT WHEN ACTUALLY RUNNING
+#global generation
+#generation=100
+#global writeout
+#writeout=100
 
 '''
  Takes a dictionary of chromosome dictionaries and the effect size of each mutation, calculates the gene expression
@@ -122,7 +127,7 @@ def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits):
         survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
     except ValueError:
         f_genos.write('POPULATION CRASH')
-        f_phenos.write('POPULATION CRASH')
+        f_phens.write('POPULATION CRASH')
         f_fits.write('POPULATION CRASH')
         return
     
@@ -242,10 +247,6 @@ def mutate_STR(chroms, mut_params, f_genos):
 
 '''
 '''
-def run_gen(pop, size, optim_exp, fit_var, mut_params, effect_size, f_genos, f_phenos, f_fits):
-    return(pop_t)
-   
-
 def get_outfiles(opt, fvar, mut_params, effect_size, p):
     if len(mut_params)==1:
         t='SNP.'+str(effect_size)
