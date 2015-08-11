@@ -27,6 +27,6 @@ sigsq_g=20
 
 beta=0.5
 
-path='/home/eglassbe/strs/str_res/'
+path='/home/eglassbe/str_simulations/str_res/'
 
 python str_sims.py -m $mu $p $sigsq_g -b $beta -p $path

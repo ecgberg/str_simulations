@@ -25,6 +25,6 @@ mu=.0005
 
 beta=1
 
-path='/home/eglassbe/strs/str_res/'
+path='/home/eglassbe/str_simulations/str_res/'
 
 python str_sims.py -m $mu -b $beta -p $path
