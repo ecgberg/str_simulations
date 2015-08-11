@@ -175,7 +175,7 @@ def mutate_SNP(chroms, mut_params, f_genos):
                 snp_counts[SNP]=1
     
     try:
-        start_id=max(SNPs) + 1
+        start_id=max(snp_counts.keys()) + 1
     except ValueError:
         start_id=0
     
