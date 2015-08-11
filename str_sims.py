@@ -166,7 +166,14 @@ def mutate_SNP(chroms, mut_params, f_genos):
     # Second, build new SNP mutations
     # ~~~~~ #
     
-    SNPs=sum([c.keys() for c in chroms.values()], []) # Pull out existing SNP ids
+    snp_counts=dict()
+    for chrom in chroms.values():
+        for SNP in chrom.keys():
+            try:
+                snp_counts[SNP]+=1
+            except KeyError:
+                snp_counts[SNP]=1
+    
     try:
         start_id=max(SNPs) + 1
     except ValueError:
@@ -185,9 +192,8 @@ def mutate_SNP(chroms, mut_params, f_genos):
     
     # This may not be the most efficient way to handle writing genotypes to files if lots of SNPs pop up and go extinct...
     if generation % writeout == 0:
-        genos=np.array([SNPs.count(SNP) for SNP in xrange(start_id)]) # Write out previous generations genotypes to a file
-        np.savetxt(f_genos, genos.reshape((1, genos.shape[0])), fmt='%d')
-    
+        genos_write=np.asarray(snp_counts.items()).T
+        np.savetxt(f_genos, genos_write, fmt='%d')
 
 
 '''
