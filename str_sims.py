@@ -98,6 +98,9 @@ def get_phens_fits(chroms, b, o, s_f, f_p, f_f):
     # Normalize fitnesses to sum to one
     fits=fits/(sum(fits))
     
+    if np.isnan(sum(fits)):
+        return
+    
     # Write phenotype and fitness distributions to a file
     if generation % writeout == 0:
         np.savetxt(f_p, phens.reshape(1, phens.shape[0]), fmt='%d')
@@ -125,7 +128,7 @@ def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits):
     # Pick names of chromosomes to keep in proportion to their fitness
     try:
         survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
-    except ValueError:
+    except TypeError:
         f_genos.write('POPULATION CRASH')
         f_phens.write('POPULATION CRASH')
         f_fits.write('POPULATION CRASH')
@@ -363,7 +366,7 @@ parser.add_argument('-w',
                     help='Interval between which to write out population information - default is 100')
 parser.add_argument('-p', 
                     type=str, 
-                    default='/Users/eglassbe/Dropbox/Pritchard_Lab/str_res/',
+                    default='/Users/eglassbe/Dropbox/Pritchard_Lab/str_simulations/str_res/',
                     help='Path to write results files to - default is Pritchard Lab Dropbox str_res/')
 args=parser.parse_args()
 print(args)
