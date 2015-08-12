@@ -12,11 +12,11 @@
 #
 #$ -w e
 #
-#$ -e /home/eglassbe/strs/jobs/snp_1.err
+#$ -e /home/eglassbe/str_simulations/jobs/snp_1.err
 #
 #$ -cwd
 #
-#$ -o /home/eglassbe/strs/jobs/snp_1.out
+#$ -o /home/eglassbe/str_simulations/jobs/snp_1.out
 #
 
 module load python/2.7
