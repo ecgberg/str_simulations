@@ -12,11 +12,11 @@
 #
 #$ -w e
 #
-#$ -e /home/eglassbe/strs/jobs/str_1.err
+#$ -e /home/eglassbe/str_simulations/jobs/str_1.err
 #
 #$ -cwd
 #
-#$ -o /home/eglassbe/strs/jobs/str_1.out
+#$ -o /home/eglassbe/str_simulations/jobs/str_1.out
 #
 
 module load python/2.7
@@ -27,6 +27,6 @@ sigsq_g=20
 
 beta=0.5
 
-path='/home/eglassbe/strs/str_res/'
+path='/home/eglassbe/str_simulations/str_res/'
 
 python str_sims.py -m $mu $p $sigsq_g -b $beta -p $path
