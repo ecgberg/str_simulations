@@ -129,7 +129,7 @@ def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits):
     try:
         survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
     except TypeError:
-        crash_string='POPULATION CRASH - Generation {0}').format(generation)
+        crash_string='POPULATION CRASH - Generation '+ str(generation)
         f_genos.write(crash_string)
         f_phens.write(crash_string)
         f_fits.write(crash_string)
