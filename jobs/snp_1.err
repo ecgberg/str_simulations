@@ -2,3 +2,13 @@ str_sims.py:94: RuntimeWarning: invalid value encountered in divide
   fits=fits/(sum(fits))
 str_sims.py:122: RuntimeWarning: invalid value encountered in less
   survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
+Traceback (most recent call last):
+  File "str_sims.py", line 382, in <module>
+    path=args.p)
+  File "str_sims.py", line 287, in main
+    f_g=open(fname_genotypes, 'w')
+IOError: [Errno 2] No such file or directory: '/home/eglassbe/str_simulations/str_res/genos_SNP.1.0_mu_0.0005_fit_0.1'
+str_sims.py:99: RuntimeWarning: invalid value encountered in divide
+  fits=fits/(sum(fits))
+str_sims.py:127: RuntimeWarning: invalid value encountered in less
+  survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
