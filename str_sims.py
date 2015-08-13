@@ -269,6 +269,8 @@ def get_outfiles(opt, fvar, mut_params, effect_size, p):
     fnames=[p+'genos_'+suffix, p+'phenos_'+suffix, p+'fits_'+suffix]
     return(fnames)
 
+'''
+'''
 def init_pop(size, t):
     chrom_ids=range(size)
     # This is DEFINITELY not the most memory efficient way to initialize a SNP population...
