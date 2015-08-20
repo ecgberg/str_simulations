@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-#$ -N run_SNPs_9
+#$ -N run_SNPs_0820
 #
 #$ -l h_vmem=4G
 #
