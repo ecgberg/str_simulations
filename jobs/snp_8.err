@@ -18,23 +18,3 @@ str_sims.py:99: RuntimeWarning: invalid value encountered in divide
   fits=fits/(sum(fits))
 str_sims.py:99: RuntimeWarning: invalid value encountered in divide
   fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
-str_sims.py:99: RuntimeWarning: invalid value encountered in divide
-  fits=fits/(sum(fits))
