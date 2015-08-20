@@ -47,7 +47,6 @@ def get_expression(chromosomes, effect_size):
     # Format into a 2D numpy array
     expressions=zip(chrs.keys(), chrs.values())
     exp=np.array(expressions)
-    print(exp)
     return(exp)
 
 
@@ -104,7 +103,7 @@ def get_phens_fits(chroms, b, o, s_f, f_p, f_f):
     
     # Write phenotype and fitness distributions to a file
     if generation % writeout == 0:
-        np.savetxt(f_p, phens.reshape(1, phens.shape[0]), fmt='%d')
+        np.savetxt(f_p, phens.reshape(1, phens.shape[0]), fmt='%.2f')
         np.savetxt(f_f, fits.reshape(1, phens.shape[0]), fmt='%.5f')
     
     # concatenate into a 2D numpy array (column 1 is chromosomal gene expression, column 2 is individual phenotype
@@ -137,7 +136,7 @@ def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits):
         return
     
     # Build a list of chromosomes appropriately
-    chr_list=[tmin1[chrom] for chrom in survivor_chrs]
+    chr_list=[tmin1[chrom].copy() for chrom in survivor_chrs]
     
     # Build a list of chromosome names
     new_pop=dict(zip(range(2*pop_size), chr_list))
@@ -193,12 +192,9 @@ def mutate_SNP(chroms, mut_params, f_genos):
     chr_to_mut=np.random.choice(chroms.keys(), size=num_mutations, replace=False)
     print('MUTATIONS: {0} occurred at positions {1} on chromosomes {2}').format(num_mutations, mut_ids, chr_to_mut)
     # Could maybe be done more efficiently if I need to
-    print(chroms)
-    print(zip(chr_to_mut, mut_ids, muts))
     for chrom, k, v in zip(chr_to_mut, mut_ids, muts):
+        assert k not in chroms[chrom]
         chroms[chrom][k]=v
-        print(chroms[chrom])
-    print(chroms)
     
     # This may not be the most efficient way to handle writing genotypes to files if lots of SNPs pop up and go extinct...
     if generation % writeout == 0:
