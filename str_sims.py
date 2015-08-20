@@ -47,6 +47,7 @@ def get_expression(chromosomes, effect_size):
     # Format into a 2D numpy array
     expressions=zip(chrs.keys(), chrs.values())
     exp=np.array(expressions)
+    print(exp)
     return(exp)
 
 
@@ -189,10 +190,15 @@ def mutate_SNP(chroms, mut_params, f_genos):
     # Third, assign those new SNP mutations to chromosomes
     # ~~~~~ #
 
-    chr_to_mut=np.random.choice(chroms.keys(), size=num_mutations, replace=True)
+    chr_to_mut=np.random.choice(chroms.keys(), size=num_mutations, replace=False)
+    print('MUTATIONS: {0} occurred at positions {1} on chromosomes {2}').format(num_mutations, mut_ids, chr_to_mut)
     # Could maybe be done more efficiently if I need to
+    print(chroms)
+    print(zip(chr_to_mut, mut_ids, muts))
     for chrom, k, v in zip(chr_to_mut, mut_ids, muts):
         chroms[chrom][k]=v
+        print(chroms[chrom])
+    print(chroms)
     
     # This may not be the most efficient way to handle writing genotypes to files if lots of SNPs pop up and go extinct...
     if generation % writeout == 0:
