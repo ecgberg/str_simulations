@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "str_sims.py", line 382, in <module>
-    path=args.p)
-  File "str_sims.py", line 287, in main
-    f_g=open(fname_genotypes, 'w')
-IOError: [Errno 2] No such file or directory: '/home/eglassbe/str_simulations/str_res/genos_STR.0.5_mu_0.0005.0.84.20.0_fit_0.1'
