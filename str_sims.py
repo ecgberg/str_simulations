@@ -79,12 +79,9 @@ get_fitnesses=np.vectorize(get_fit, otypes=[np.float])
  The second will write out the individual phenotype distribution
  The third will write out the distribution of individual fitnesses
 '''
-def get_phens_fits(chroms, b, o, s_f, f_p, f_f):
+def get_phens_fits(chroms, b, o, s_f, f_p, f_f, f_c):
     exps=get_expression(chroms, b)
     
-    # Shuffles along the first index of the 2D array
-    # This is to be able to randomly pair chromosomes into 'individuals'
-    np.random.shuffle(exps)
     # Sum pairs of chromosomes to get total gene expression for sets of individuals
     phens=np.array([sum(tup) for tup in zip(exps[:,1][0::2], exps[:,1][1::2])])
     
@@ -103,6 +100,7 @@ def get_phens_fits(chroms, b, o, s_f, f_p, f_f):
     
     # Write phenotype and fitness distributions to a file
     if generation % writeout == 0:
+        np.savetxt(f_c, exps[:,1].reshape(1, exps[:,1].shape[0]), fmt='%.2f')
         np.savetxt(f_p, phens.reshape(1, phens.shape[0]), fmt='%.2f')
         np.savetxt(f_f, fits.reshape(1, phens.shape[0]), fmt='%.5f')
     
@@ -116,20 +114,22 @@ def get_phens_fits(chroms, b, o, s_f, f_p, f_f):
 
 '''
 '''
-def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits):
+def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits, f_chroms):
     # Calculate fitnesses of the previous generation
     chrom_dat=get_phens_fits(chroms=tmin1, 
                              b=beta, 
                              o=opt, 
                              s_f=sigsq_f, 
                              f_p=f_phens, 
-                             f_f=f_fits)
+                             f_f=f_fits,
+                             f_c=f_chroms)
     
     # Pick names of chromosomes to keep in proportion to their fitness
     try:
         survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
     except TypeError:
         crash_string='POPULATION CRASH - Generation '+ str(generation)
+        f_chroms.write(crash_string)
         f_genos.write(crash_string)
         f_phens.write(crash_string)
         f_fits.write(crash_string)
@@ -268,7 +268,7 @@ def get_outfiles(opt, fvar, mut_params, effect_size, p):
         mut='mu_'+str(mut_params[0])+'.'+str(mut_params[1])+'.'+str(mut_params[2])
     fits='fit_'+str(opt)+'.'+str(fvar)
     suffix=t+'_'+mut+'_'+fits
-    fnames=[p+'genos_'+suffix, p+'phenos_'+suffix, p+'fits_'+suffix]
+    fnames=[p+'genos_'+suffix, p+'phenos_'+suffix, p+'fits_'+suffix, p+'chroms_'+suffix]
     return(fnames)
 
 '''
@@ -287,11 +287,12 @@ def init_pop(size, t):
 '''
 '''
 def main(N, optimal_expression, fitness_variance, mutational_parameters, mutational_effect, generations, w, path):
-    fname_genotypes, fname_phenotypes, fname_fitnesses = get_outfiles(opt=optimal_expression, 
-                                                                      fvar=fitness_variance, 
-                                                                      mut_params=mutational_parameters, 
-                                                                      effect_size=mutational_effect,
-                                                                      p=path)
+    fname_genotypes, fname_phenotypes, fname_fitnesses, fname_chromosomes, = get_outfiles(opt=optimal_expression, 
+                                                                                          fvar=fitness_variance, 
+                                                                                          mut_params=mutational_parameters, 
+                                                                                          effect_size=mutational_effect,
+                                                                                          p=path)
+    f_c=open(fname_chromosomes, 'w')
     f_g=open(fname_genotypes, 'w')
     f_p=open(fname_phenotypes, 'w')
     f_f=open(fname_fitnesses, 'w')
@@ -332,7 +333,8 @@ def main(N, optimal_expression, fitness_variance, mutational_parameters, mutatio
                         sigsq_f=fitness_variance, 
                         f_genos=f_g, 
                         f_phens=f_p, 
-                        f_fits=f_f)
+                        f_fits=f_f,
+                        f_chroms=f_c)
         
         generation=generation+1
     
