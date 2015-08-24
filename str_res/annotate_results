@@ -9,7 +9,7 @@ for folder in ${x[@]};
                 {split(a[7], c, ".")} 
                 {print NR*10, b[1], b[2],
                        substr(a[3], 0, 3), 
-                       substr(a[3], 5, 3), 
+                       substr(a[3], 5), 
                        a[5], c[1], c[2], $0}' run_$folder/$file > run_$folder/tmp && mv run_$folder/tmp run_$folder/$file; 
         cat run_$folder/$file >> annotated_results.txt;
         done; 
