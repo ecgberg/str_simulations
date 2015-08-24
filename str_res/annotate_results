@@ -7,15 +7,11 @@ for folder in ${x[@]};
         do awk '{split(FILENAME, a, "_")} 
                 {split(a[2], b, "/")}
                 {split(a[7], c, ".")} 
-                {print b[1], b[2],
+                {print NR*10, b[1], b[2],
                        substr(a[3], 0, 3), 
                        substr(a[3], 5, 3), 
                        a[5], c[1], c[2], $0}' run_$folder/$file > run_$folder/tmp && mv run_$folder/tmp run_$folder/$file; 
         cat run_$folder/$file >> annotated_results.txt;
         done; 
+    echo done with run $folder;
     done
-
-grep 'POPULATION' annotated_results.txt > crashes.txt
-cut -f1,2,3,4,5,6,7,12- -d ' ' crashes.txt > tmp && mv tmp crashes.txt
-
-grep -Ev 'POPULATION' annotated_results.txt > tmp && mv tmp annotated_results.txt
