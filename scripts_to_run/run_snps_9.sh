@@ -21,21 +21,21 @@
 
 module load python/2.7
 
-mu=.0005
-
+mu=.05
+sf=1
 beta=( 1 0.9 0.8 0.7 0.6 0.5 0.4 0.2 0.3 0.1 )
 
 runnum=9
 
 path='/home/eglassbe/str_simulations/str_res/run_'$runnum'/'
 
-python str_sims.py -m $mu -b ${beta[0]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[1]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[2]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[3]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[4]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[5]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[6]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[7]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[8]} -p $path -w 10
-python str_sims.py -m $mu -b ${beta[9]} -p $path -w 10
+python str_sims.py -m $mu -b ${beta[0]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[1]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[2]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[3]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[4]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[5]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[6]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[7]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[8]} -p $path -w 100 -f $sf
+python str_sims.py -m $mu -b ${beta[9]} -p $path -w 100 -f $sf
