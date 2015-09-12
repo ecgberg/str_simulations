@@ -127,8 +127,10 @@ def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits, f_c
     # Pick names of chromosomes to keep in proportion to their fitness
     try:
         if s:
+            print 'SELECTION NOW'
             survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
         else:
+            print 'NEUTRAL'
             survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size)
     except TypeError:
         crash_string='POPULATION CRASH - Generation '+ str(generation)
@@ -379,11 +381,16 @@ parser.add_argument('-p',
                     type=str, 
                     default='/Users/eglassbe/Dropbox/Pritchard_Lab/str_simulations/str_res/',
                     help='Path to write results files to - default is Pritchard Lab Dropbox str_res/')
-parser.add_argument('-s',
-                    type=bool,
-                    default=True,
-                    help='Whether or not to include selection in the simulations')
-
+parser.add_argument('--neutral',
+                    dest='s',
+                    action='store_false',
+                    help='Turn off selection')
+parser.add_argument('--no-neutral',
+                    dest='s',
+                    action='store_true',
+                    help='Keep selection on')
+parser.set_defaults(s=True)
+                    
 args=parser.parse_args()
 print(args)
 
