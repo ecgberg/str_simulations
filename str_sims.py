@@ -114,7 +114,7 @@ def get_phens_fits(chroms, b, o, s_f, f_p, f_f, f_c):
 
 '''
 '''
-def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits, f_chroms):
+def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits, f_chroms, s):
     # Calculate fitnesses of the previous generation
     chrom_dat=get_phens_fits(chroms=tmin1, 
                              b=beta, 
@@ -126,7 +126,10 @@ def wf_sample(tmin1, pop_size, beta, opt, sigsq_f, f_genos, f_phens, f_fits, f_c
     
     # Pick names of chromosomes to keep in proportion to their fitness
     try:
-        survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
+        if s:
+            survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size, p=chrom_dat[:,3])
+        else:
+            survivor_chrs=np.random.choice(chrom_dat[:,0], size=2*pop_size)
     except TypeError:
         crash_string='POPULATION CRASH - Generation '+ str(generation)
         f_chroms.write(crash_string)
@@ -286,7 +289,7 @@ def init_pop(size, t):
 
 '''
 '''
-def main(N, optimal_expression, fitness_variance, mutational_parameters, mutational_effect, generations, w, path):
+def main(N, optimal_expression, fitness_variance, mutational_parameters, mutational_effect, generations, w, path, sel):
     fname_genotypes, fname_phenotypes, fname_fitnesses, fname_chromosomes, = get_outfiles(opt=optimal_expression, 
                                                                                           fvar=fitness_variance, 
                                                                                           mut_params=mutational_parameters, 
@@ -334,7 +337,8 @@ def main(N, optimal_expression, fitness_variance, mutational_parameters, mutatio
                         f_genos=f_g, 
                         f_phens=f_p, 
                         f_fits=f_f,
-                        f_chroms=f_c)
+                        f_chroms=f_c,
+                        s=sel)
         
         generation=generation+1
     
@@ -375,6 +379,11 @@ parser.add_argument('-p',
                     type=str, 
                     default='/Users/eglassbe/Dropbox/Pritchard_Lab/str_simulations/str_res/',
                     help='Path to write results files to - default is Pritchard Lab Dropbox str_res/')
+parser.add_argument('-s',
+                    type=bool,
+                    default=True,
+                    help='Whether or not to include selection in the simulations')
+
 args=parser.parse_args()
 print(args)
 
@@ -389,4 +398,5 @@ if __name__ == '__main__':
          mutational_effect=args.b, 
          generations=args.g, 
          w=args.w,
-         path=args.p)
+         path=args.p,
+         sel=args.s)
