@@ -100,9 +100,13 @@ def get_phens_fits(chroms, b, o, s_f, f_p, f_f, f_c):
     
     # Write phenotype and fitness distributions to a file
     if generation % writeout == 0:
-        np.savetxt(f_c, exps[:,1].reshape(1, exps[:,1].shape[0]), fmt='%.2f')
-        np.savetxt(f_p, phens.reshape(1, phens.shape[0]), fmt='%.2f')
-        np.savetxt(f_f, fits.reshape(1, phens.shape[0]), fmt='%.5f')
+        expression_dat = np.concatenate([exps[:,1], np.array([ np.var(exps[:,1]) ]) ])
+        np.savetxt(f_c, expression_dat.reshape(1, expression_dat.shape[0]), fmt='%.2f '*len(exps[:,1])+'%g')
+        
+        phenotype_dat = np.concatenate([phens, np.array([ np.var(phens/b) ]) ]) 
+        np.savetxt(f_p, phenotype_dat.reshape(1, phenotype_dat.shape[0]), fmt='%.2f '*len(exps[:,1])+'%g')
+        
+        # np.savetxt(f_f, fits.reshape(1, phens.shape[0]), fmt='%.5f')
     
     # concatenate into a 2D numpy array (column 1 is chromosomal gene expression, column 2 is individual phenotype
     # column 3 is individual fitness (individual is the chromosome next to you
@@ -202,9 +206,9 @@ def mutate_SNP(chroms, mut_params, f_genos):
         chroms[chrom][k]=v
     
     # This may not be the most efficient way to handle writing genotypes to files if lots of SNPs pop up and go extinct...
-    if generation % writeout == 0:
-        genos_write=np.asarray(snp_counts.items()).T
-        np.savetxt(f_genos, genos_write, fmt='%d')
+    # if generation % writeout == 0:
+    #     genos_write=np.asarray(snp_counts.items()).T
+    #     np.savetxt(f_genos, genos_write, fmt='%d')
 
 
 '''
