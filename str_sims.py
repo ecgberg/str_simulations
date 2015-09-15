@@ -100,11 +100,12 @@ def get_phens_fits(chroms, b, o, s_f, f_p, f_f, f_c):
     
     # Write phenotype and fitness distributions to a file
     if generation % writeout == 0:
-        expression_dat = np.concatenate([exps[:,1], np.array([ np.var(exps[:,1]) ]) ])
+        expression_dat = np.concatenate([exps[:,1], np.array([ np.var(exps[:,1]/b) ]) ])
         np.savetxt(f_c, expression_dat.reshape(1, expression_dat.shape[0]), fmt='%.2f '*len(exps[:,1])+'%g')
         
-        phenotype_dat = np.concatenate([phens, np.array([ np.var(phens/b) ]) ]) 
-        np.savetxt(f_p, phenotype_dat.reshape(1, phenotype_dat.shape[0]), fmt='%.2f '*len(exps[:,1])+'%g')
+        phenotype_dat = np.concatenate([phens, np.array([ np.var(phens) ]) ]) 
+        print(str(len(phens)) + ': ' + str(len(phenotype_dat)))
+        np.savetxt(f_p, phenotype_dat.reshape(1, phenotype_dat.shape[0]), fmt='%.2f '*len(phens)+'%g')
         
         # np.savetxt(f_f, fits.reshape(1, phens.shape[0]), fmt='%.5f')
     
