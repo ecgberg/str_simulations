@@ -341,7 +341,7 @@ def main(N, optimal_expression, fitness_variance, mutational_parameters, mutatio
                         f_chroms=f_c,
                         s=sel)
         
-        new_gens = get_expression(chromosomes=pop, effect_size=mutational_effect[:,1] / mutational_effect )
+        new_gens = get_expression(chromosomes=pop, effect_size=mutational_effect)[:,1] / mutational_effect
         drift_gen_var = np.var( new_gens )
         
         if generation > 90000:
